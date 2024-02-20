@@ -3,6 +3,7 @@ function setup() {
     background(255, 255, 255);
 }
 
+
 function scenery() {
     push();
     noStroke();
@@ -30,6 +31,7 @@ function scenery() {
 
 function cat(x, y) {
     push();
+    // stroke(0.01);
     translate(x, y);
     scale(0.6);
     fill (255, 140, 0);
@@ -73,10 +75,14 @@ triangle (x + 20, y + 30, x + 55, y + 30, x + 35, y);
 strokeWeight (10);
 stroke (255, 140, 0);
 line (x + 160, y + 95, x + 210, y + 45);
+// pop();
+
 }
 
 function button(x, y, w, h) {
+push();   
 noStroke();
+pop();
 fill(255, 255, 255);
 rect(x, y, w, h);
 
@@ -86,7 +92,9 @@ text("Retry", x + w / 4, y + h / 1.5);
 }
 
 function startButton(x, y, w, h) {
+    push();
     noStroke();
+    pop();
     fill(255, 255, 255);
     rect(x, y, w, h);
 
@@ -99,6 +107,7 @@ function startScreen() {
     background("pink");
     cat();
 
+    push();
     noStroke();
     fill(255, 255, 255);
     rect(380, 210, 150, 60);
@@ -107,50 +116,80 @@ function startScreen() {
     textSize(24);
     text("Start game", 360 + 150 / 4, 210 + 60 / 1.5);
 
+ 
 }
 
 function gameScreen() {
     scenery();
-    cat();
+    cat(100, catY);
+
+    if (keyIsDown(38)) {
+        velocity = velocity - 0.2;
+        velocity = velocity - 0.4;
+    }
 }
 
+
+
 function endScreen() {
-    scenery();
-    cat();
+    background("pink");
     button();
 }
 
-let state = "start game";
+
 let catY = 10;
-let velocity = 0.4;
-const acceleration = 0.02;
+let velocity = 0.2;
+const acceleration = 0.1;
 let buttonIsClicked = false;
-let gameTimer = 0;
+// let gameTimer = 0;
 
 let gameIsRunning = true;
+let state = "start";
 
 function draw() {
-    scenery();
+    // push();
+    // scenery();
+    // pop();
 
-    push();
-    cat(100, catY);
-    pop();
+    // push();
+    // cat(100, catY);
+    // pop();
+
+   /* catY = catY + velocity;
+    velocity = velocity + acceleration; */
 
     push();
     button(220, 150, 130, 40);
     pop();
+
+    if (state === "start") {
+        startScreen();
+    } else if (state === "game") {
+        gameScreen();
+        // gameTimer = gameTimer + 1;
+        // if (gametimer >= 100) {
+        //     gameTimer = 0;
+        //     state = "result";
+        // }
+    } else if (state === "result") {
+        endScreen();
+    }
+
 
     if (gameIsRunning === true) {
         catY = catY + velocity;
         velocity = velocity + acceleration;
     }
 
-    if (mouseIsPressed) {
-        velocity = velocity - 0.4;
-    }
+    // if (mouseIsPressed) {
+    //     velocity = velocity - 0.2;
+    //     velocity = velocity - 0.4;
+    // }
 
+    // if (catY > 100) {
     if (catY > 120) {
         gameIsRunning = false;
+        console.log("game over");
         if (velocity <= 0.4) {
             fill(255, 255, 255);
             textSize(20);
@@ -162,34 +201,36 @@ function draw() {
             text("you lose", 260, 130);
         console.log("You lose");
 
-        if(buttonIsClicked) {
+        // if(buttonIsClicked) {
 
-        }
-
-        if (state === "start game") {
-            startScreen();
-        } else if (state === "game") {
-            gameScreen();
-            gameTimer = gameTimer + 1;
-            if (gametimer >= 100) {
-                gameTimer = 0;
-                state = "result";
-            }
-        } else if (state === "result") {
-            endScreen();
-        }
+        // }
         }
         noLoop();
     }
-    }
+}
+    // }
 
-    function mouseClicked() {
-        if (state === "start game") {
+    function mousePressed() {
+        if (state === "start") {
             state = "game";
-        }  else if (state === "result") {
+        }  else if (state === "game") {
+            state = "result";
+        }
+        else if (state === "result") {
             state = "game";
         }
     }
+
+
+
+
+
+
+
+
+
+
+
 
 
 
