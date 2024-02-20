@@ -136,14 +136,13 @@ function endScreen() {
     button();
 }
 
-
 let catY = 10;
 let velocity = 0.2;
 const acceleration = 0.1;
-let buttonIsClicked = false;
+// let buttonIsClicked = false;
 // let gameTimer = 0;
 
-let gameIsRunning = true;
+let gameIsRunning = false;
 let state = "start";
 
 function draw() {
@@ -213,6 +212,7 @@ function draw() {
     function mousePressed() {
         if (state === "start") {
             state = "game";
+            gameIsRunning = true;
         }  else if (state === "game") {
             state = "result";
         }
@@ -220,6 +220,9 @@ function draw() {
             state = "game";
         }
     }
+
+
+
 
 
 
