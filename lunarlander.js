@@ -30,10 +30,10 @@ function scenery() {
 }
 
 function cat(x, y) {
-    push();
-    // stroke(0.01);
     translate(x, y);
     scale(0.6);
+    push();
+    // stroke(0.01);
     fill (255, 140, 0);
 
 // body
@@ -75,7 +75,7 @@ triangle (x + 20, y + 30, x + 55, y + 30, x + 35, y);
 strokeWeight (10);
 stroke (255, 140, 0);
 line (x + 160, y + 95, x + 210, y + 45);
-// pop();
+pop();
 
 }
 
@@ -100,7 +100,7 @@ function startButton(x, y, w, h) {
 
     fill(0, 0, 0);
     textSize(24);
-    text("Start game", x + w / 4, y + h / 1.5);
+    text("Start game", 360 + 150 / 4, 210 + 60 / 1.5);
 }
 
 function startScreen() {
@@ -115,6 +115,10 @@ function startScreen() {
     fill(0, 0, 0);
     textSize(24);
     text("Start game", 360 + 150 / 4, 210 + 60 / 1.5);
+     
+    fill(231, 84, 128);
+    textSize(60);
+    text("CatParty", 310 + 100 / 4, 120 + 60 / 1.5);
 
  
 }
@@ -161,6 +165,7 @@ function draw() {
     button(220, 150, 130, 40);
     pop();
 
+        
     if (state === "start") {
         startScreen();
     } else if (state === "game") {
@@ -171,7 +176,8 @@ function draw() {
         //     state = "result";
         // }
     } else if (state === "result") {
-        endScreen();
+        //Drawn same place as you lose text
+        // endScreen();
     }
 
 
@@ -193,17 +199,29 @@ function draw() {
             fill(255, 255, 255);
             textSize(20);
             text("you win", 260, 130);
+            state = "result";
         console.log("You win!");
         } else {
+            endScreen();
             fill(255, 255, 255);
-            textSize(20);
-            text("you lose", 260, 130);
+            textSize(30);
+            text("You lose", 260, 130);
+           
         console.log("You lose");
 
-        // if(buttonIsClicked) {
-
-        // }
         }
+
+        if (
+            mouseIsPressed &&
+            mouseX > 380 &&
+            mouseX < 380 + 150 &&
+            mouseY > 210 &&
+            mouseY < 210 + 60
+            ) {
+            gameIsRunning = true;
+            buttonVisible = false;
+            }
+
         noLoop();
     }
 }
@@ -215,11 +233,18 @@ function draw() {
             gameIsRunning = true;
         }  else if (state === "game") {
             state = "result";
+            
         }
         else if (state === "result") {
             state = "game";
+            
         }
     }
+
+
+
+
+
 
 
 
