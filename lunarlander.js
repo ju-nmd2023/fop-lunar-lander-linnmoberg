@@ -2,7 +2,8 @@ function setup() {
     createCanvas(600, 300);
     background(255, 255, 255);
 }
-
+let gameIsRunning = false;
+let state = "start";
 
 function scenery() {
     push();
@@ -88,20 +89,20 @@ rect(x, y, w, h);
 
 fill(0, 0, 0);
 textSize(24);
-text("Retry", x + w / 4, y + h / 1.5);
+text("Retry", 250 + 150 / 4, 10 + 60 / 1.5);
 }
 
-function startButton(x, y, w, h) {
-    push();
-    noStroke();
-    pop();
-    fill(255, 255, 255);
-    rect(x, y, w, h);
+// function startButton(x, y, w, h) {
+//     push();
+//     noStroke();
+//     pop();
+//     fill(255, 255, 255);
+//     rect(x, y, w, h);
 
-    fill(0, 0, 0);
-    textSize(24);
-    text("Start game", 360 + 150 / 4, 210 + 60 / 1.5);
-}
+//     fill(0, 0, 0);
+//     textSize(24);
+//     text("Start game", 360 + 150 / 4, 210 + 60 / 1.5);
+// }
 
 function startScreen() {
     background("pink");
@@ -120,7 +121,6 @@ function startScreen() {
     textSize(60);
     text("CatParty", 310 + 100 / 4, 120 + 60 / 1.5);
 
- 
 }
 
 function gameScreen() {
@@ -129,25 +129,29 @@ function gameScreen() {
 
     if (keyIsDown(38)) {
         velocity = velocity - 0.2;
-        velocity = velocity - 0.4;
+        // velocity = velocity - 0.4;
     }
 }
 
-
-
 function endScreen() {
     background("pink");
-    button();
+
+fill(255, 255, 255);
+rect(240, 10, 150, 60);
+
+fill(0, 0, 0);
+textSize(24);
+text("Retry", 250 + 150 / 4, 10 + 60 / 1.5);
+
+
 }
 
 let catY = 10;
 let velocity = 0.2;
 const acceleration = 0.1;
 // let buttonIsClicked = false;
-// let gameTimer = 0;
 
-let gameIsRunning = false;
-let state = "start";
+
 
 function draw() {
     // push();
@@ -170,15 +174,10 @@ function draw() {
         startScreen();
     } else if (state === "game") {
         gameScreen();
-        // gameTimer = gameTimer + 1;
-        // if (gametimer >= 100) {
-        //     gameTimer = 0;
-        //     state = "result";
-        // }
     } else if (state === "result") {
-        //Drawn same place as you lose text
-        // endScreen();
+        endScreen();
     }
+
 
 
     if (gameIsRunning === true) {
@@ -194,8 +193,7 @@ function draw() {
     // if (catY > 100) {
     if (catY > 120) {
         gameIsRunning = false;
-        console.log("game over");
-        if (velocity <= 0.4) {
+        if (velocity <= 0.5) {
             fill(255, 255, 255);
             textSize(20);
             text("you win", 260, 130);
@@ -205,41 +203,35 @@ function draw() {
             endScreen();
             fill(255, 255, 255);
             textSize(30);
-            text("You lose", 260, 130);
-           
+            text("You lose", 260, 130);  
         console.log("You lose");
 
         }
-
-        if (
-            mouseIsPressed &&
-            mouseX > 380 &&
-            mouseX < 380 + 150 &&
-            mouseY > 210 &&
-            mouseY < 210 + 60
-            ) {
-            gameIsRunning = true;
-            buttonVisible = false;
-            }
-
         noLoop();
     }
 }
-    // }
 
-    function mousePressed() {
-        if (state === "start") {
-            state = "game";
-            gameIsRunning = true;
-        }  else if (state === "game") {
-            state = "result";
-            
-        }
-        else if (state === "result") {
-            state = "game";
-            
-        }
+
+function mousePressed() {
+    if (state === "start") {
+        state = "game";
+        gameIsRunning = true;
+    }  else if (state === "game") {
+        state = "result";  
+        gameIsRunning = false; 
+    } else if (state === "result") {
+        state = "start";
+        gameIsRunning = false;
+        catY = 10;
+        velocity = 0.2;
+        loop();
     }
+}
+
+
+
+   
+
 
 
 
