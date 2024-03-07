@@ -92,17 +92,6 @@ textSize(24);
 text("Retry", 250 + 150 / 4, 10 + 60 / 1.5);
 }
 
-// function startButton(x, y, w, h) {
-//     push();
-//     noStroke();
-//     pop();
-//     fill(255, 255, 255);
-//     rect(x, y, w, h);
-
-//     fill(0, 0, 0);
-//     textSize(24);
-//     text("Start game", 360 + 150 / 4, 210 + 60 / 1.5);
-// }
 
 function startScreen() {
     background("pink");
@@ -129,7 +118,7 @@ function gameScreen() {
 
     if (keyIsDown(38)) {
         velocity = velocity - 0.2;
-        // velocity = velocity - 0.4;
+
     }
 }
 
@@ -149,21 +138,10 @@ text("Retry", 250 + 150 / 4, 10 + 60 / 1.5);
 let catY = 10;
 let velocity = 0.2;
 const acceleration = 0.1;
-// let buttonIsClicked = false;
 
 
 
 function draw() {
-    // push();
-    // scenery();
-    // pop();
-
-    // push();
-    // cat(100, catY);
-    // pop();
-
-   /* catY = catY + velocity;
-    velocity = velocity + acceleration; */
 
     push();
     button(220, 150, 130, 40);
@@ -185,12 +163,6 @@ function draw() {
         velocity = velocity + acceleration;
     }
 
-    // if (mouseIsPressed) {
-    //     velocity = velocity - 0.2;
-    //     velocity = velocity - 0.4;
-    // }
-
-    // if (catY > 100) {
     if (catY > 120) {
         gameIsRunning = false;
         if (velocity <= 0.5) {
